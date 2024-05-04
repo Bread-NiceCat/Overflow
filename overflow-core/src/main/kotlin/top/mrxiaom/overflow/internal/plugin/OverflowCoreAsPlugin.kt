@@ -134,16 +134,12 @@ internal object OverflowCoreAsPlugin : Plugin, CommandOwner {
             @Description("调用API")
             suspend fun CommandSender.exec(
                 @Name("API请求路径") apiPath: String,
-                @Name("请求参数") params : String?,
-                @Name("发送回应") showRet : Boolean = true 
+                @Name("请求参数") params :String?
             ) {
                 val bot = (Bot.instances.firstOrNull() as RemoteBot) ?: return Unit.also {
                     sendMessage("至少有一个Bot在线才能执行该命令")
                 }
-                val ret = bot.executeAction(apiPath,params)
-                if(showRet){
-                    sendMessage(ret)
-                }
+                sendMessage(bot.executeAction(apiPath,params))
             }
             @SubCommand
             @Description("发送群消息")
